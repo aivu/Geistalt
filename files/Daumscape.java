@@ -32,7 +32,7 @@ public class Daumscape extends World
     private int lastBoxDelay = 250;
     private boolean boxAdded, lastAdded, creditsAdded; //keeps certain boxes from being added funny at different parts of the game
 
-    public GreenfootSound bgm = new GreenfootSound("Always With Me.mp3");
+    public GreenfootSound bgm = new GreenfootSound("Liquid Mountains.mp3");
     public boolean bgmOn = true;
     public boolean soundOn = true;
     public Daumscape()

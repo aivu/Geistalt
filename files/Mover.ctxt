@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ act()
+comment1.params=
+comment1.target=void\ animate()
+comment2.params=direction
+comment2.target=void\ setDirection(java.lang.String)
+comment3.params=damage\ x\ y
+comment3.target=void\ hit(int,\ int,\ int)
+comment4.params=recovery
+comment4.target=void\ add(int)
+comment5.params=
+comment5.target=void\ fire()
+comment6.params=
+comment6.target=void\ walk()
+comment7.params=
+comment7.target=boolean\ jimOK()
+numComments=8

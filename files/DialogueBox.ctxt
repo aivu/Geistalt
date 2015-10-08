@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=npcName\ number
+comment0.target=DialogueBox(java.lang.String,\ int)
+comment1.params=
+comment1.target=void\ act()
+comment2.params=name\ dialogue1\ dialogue2\ dialogue3
+comment2.target=void\ update(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment3.params=
+comment3.target=void\ checkPress()
+comment4.params=
+comment4.target=void\ chat()
+numComments=5

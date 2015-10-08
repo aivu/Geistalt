@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=direction\ theShooter
+comment0.target=Laser(java.lang.String,\ java.lang.String)
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ checkDuration()
+comment3.params=
+comment3.target=void\ move()
+comment4.params=
+comment4.target=boolean\ atWorldEdge()
+comment5.params=
+comment5.target=void\ checkHit()
+numComments=6

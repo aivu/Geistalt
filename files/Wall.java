@@ -17,8 +17,8 @@ public class Wall extends Actor
     public void addBase() //adding walls to the sides of the game screen
     {
         Daumscape daum = (Daumscape) getWorld();
-        if(daum.mapNum<17) //doesn't apply to endgame sequence
-        {
+        int mapNum = daum.getMapNum();
+        if (mapNum < 17) {
             for(int i=0; i<26; i++) //top and bottom
             {
                 Wall botWall = new Wall();
@@ -62,29 +62,29 @@ public class Wall extends Actor
     private void checkImpact()
     {
         Daumscape daum = (Daumscape) getWorld();
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-        if(jim!=null)
+        Player player = (Player) getOneIntersectingObject(Player.class);
+        if(player!=null)
         {
-            if(Math.abs(getX()-daum.jim.getX()) > Math.abs(getY()-daum.jim.getY()))
+            if(Math.abs(getX()-daum.player.getX()) > Math.abs(getY()-daum.player.getY()))
             {
-                if(getX()>daum.jim.getX())
+                if(getX()>daum.player.getX())
                 {
-                    daum.jim.setLocation(daum.jim.getX()-1, daum.jim.getY());
+                    daum.player.setLocation(daum.player.getX()-1, daum.player.getY());
                 }
-                else if(getX()<daum.jim.getX())
+                else if(getX()<daum.player.getX())
                 {
-                    daum.jim.setLocation(daum.jim.getX()+1, daum.jim.getY());
+                    daum.player.setLocation(daum.player.getX()+1, daum.player.getY());
                 }
             }
             else 
             {
-                if(getY()>daum.jim.getY())
+                if(getY()>daum.player.getY())
                 {
-                    daum.jim.setLocation(daum.jim.getX(), daum.jim.getY()-1);
+                    daum.player.setLocation(daum.player.getX(), daum.player.getY()-1);
                 }
-                else if(getY()<daum.jim.getY())
+                else if(getY()<daum.player.getY())
                 {
-                    daum.jim.setLocation(daum.jim.getX(), daum.jim.getY()+1);
+                    daum.player.setLocation(daum.player.getX(), daum.player.getY()+1);
                 }
             }
         }

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Sox extends Mover implements Speaker
 {
-    private int distance = 80; //Maximum distance between Jim and Sox.
+    private int distance = 80; //Maximum distance between Player and Sox.
     public boolean talkedTo = false;
     public Sox()
     {
@@ -35,11 +35,11 @@ public class Sox extends Mover implements Speaker
         super.act();
 
         checkDirection();
-        followJim();
+        followPlayer();
         checkTalk();
 
-        //If Jim were to be removed from the world upon defeat, as it was at first,
-        //this class would've had to continually check a boolean called jimOK because followJim() uses Jim's fields
+        //If Player were to be removed from the world upon defeat, as it was at first,
+        //this class would've had to continually check a boolean called playerOK because followPlayer() uses Player's fields
         //and would throw an IllegalStateException
     }    
 
@@ -50,7 +50,7 @@ public class Sox extends Mover implements Speaker
         //use the bounceDelCount b.c. it's convenient, don't need to make new variables
         {
             //don't need to reset the count because it's already being done in super.act()
-            if(daum.jim.getX()>getX())
+            if(daum.player.getX()>getX())
             {
                 setDirection("right");
             }
@@ -61,32 +61,31 @@ public class Sox extends Mover implements Speaker
         }
     }
 
-    private void followJim()
+    private void followPlayer()
     {
         Daumscape daum = (Daumscape) getWorld();
-        if((daum.internCount+daum.bossCount)==0)
-        {
-            if(Math.abs(daum.jim.getX()-getX())>distance)
+        if (daum.mapIsClear()) {
+            if(Math.abs(daum.player.getX()-getX())>distance)
             {
-                if(daum.jim.getX()>getX())
+                if(daum.player.getX()>getX())
                 {
                     setLocation(getX()+speed, getY());
                     super.walk();
                 }
-                else if(daum.jim.getX()<getX())
+                else if(daum.player.getX()<getX())
                 {
                     setLocation(getX()-speed, getY());
                     super.walk();
                 }
             }
-            if(Math.abs(daum.jim.getY()-getY())>distance)
+            if(Math.abs(daum.player.getY()-getY())>distance)
             {
-                if(daum.jim.getY()>getY())
+                if(daum.player.getY()>getY())
                 {
                     setLocation(getX(), getY()+speed);
                     super.walk();
                 }
-                if(daum.jim.getY()<getY())
+                if(daum.player.getY()<getY())
                 {
                     setLocation(getX(), getY()-speed);
                     super.walk();
@@ -97,8 +96,8 @@ public class Sox extends Mover implements Speaker
 
     public void checkTalk()
     {
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-        if(jim!=null && !talkedTo)
+        Player player = (Player) getOneIntersectingObject(Player.class);
+        if(player!=null && !talkedTo)
         {
             talk();
         }
@@ -107,22 +106,8 @@ public class Sox extends Mover implements Speaker
     public void talk()
     {               
         Daumscape daum = (Daumscape) getWorld();
-        if(daum.mapNum==10 && daum.internCount==0)
-        {
-            DialogueBox box = new DialogueBox(name, 0);
-            daum.addObject(box, daum.getWidth()/2, daum.getHeight()-box.height+50);
-
-            talkedTo = true;
-            daum.npcCount--;
-        }
-        if(daum.mapNum==11)
-        {
-            DialogueBox box = new DialogueBox(name, 4);
-            daum.addObject(box, daum.getWidth()/2, daum.getHeight()-box.height+50);
-
-            talkedTo = true;
-            daum.npcCount--;
-        }
+        int mapNum = daum.getMapNum();
+        talkedTo = true;
     }
 }
 

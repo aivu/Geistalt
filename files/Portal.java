@@ -22,13 +22,13 @@ public class Portal extends Actor
     private void checkStep()
     {
         Daumscape daum = (Daumscape) getWorld();        
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class); 
+        Player player = (Player) getOneIntersectingObject(Player.class); 
 
-        if(jim==null && alreadyTried == true)//used for when adding a box stating not cleared; prevents memory overflow
+        if(player==null && alreadyTried == true)//used for when adding a box stating not cleared; prevents memory overflow
         {
             alreadyTried = false;
         }
-        if(jim!=null && alreadyTried == false)
+        if(player!=null && alreadyTried == false)
         {
             alreadyTried = true;
             daum.changeNext();
@@ -38,10 +38,8 @@ public class Portal extends Actor
     private void open()
     {
         Daumscape daum = (Daumscape) getWorld();
-        List<DialogueBox> boxes = daum.getObjects(DialogueBox.class);
-        if(daum.bossCount==0 && daum.internCount==0 && daum.npcCount==0 && boxes.size()<1)
-        //boxes.size() parameter is so that the portal doesn't open until the conversations are over.
-        {
+        List<DialogueBox> mobs = daum.getObjects(Mob.class);
+        if(daum.noChat() && mobs.size() == 0) {
             this.setImage(open);
         }
     }

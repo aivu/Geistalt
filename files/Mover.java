@@ -125,7 +125,7 @@ public class Mover extends Actor
         Daumscape daum = (Daumscape) getWorld();        
         //note: you have to declare "daum" separately from whatever statements you reference it in
         //e.g. it wouldn't work if you tried to declare it while trying to reference ".soundOn"
-        
+
         if(atkDelCount>atkDelay)
         {
             atkDelCount = 0;
@@ -142,46 +142,58 @@ public class Mover extends Actor
             }
         }
     }  
-
-    public void walk() //don't put act()
+    
+    
+    private boolean okToMove()
     {
-        if(direction.equals("right"))
-        {
-            if(walkDelCount>walkDelay)
+        Wall wall = (Wall) getOneIntersectingObject(Wall.class);
+        Daumscape daum = (Daumscape) getWorld();
+        if(wall!=null || daum.noChat()) {
+            return false;
+        }
+        return true;
+    }
+
+    public void walk() {
+        if (okToMove()) {
+            if(direction.equals("right"))
             {
-                walkDelCount = 0;
-                if(getImage()==imageR1 || getImage()==imageR2)
+                if(walkDelCount>walkDelay)
                 {
-                    setImage(imageRWalk);
-                }
-                else
-                {
-                    setImage(imageR1);
+                    walkDelCount = 0;
+                    if(getImage()==imageR1 || getImage()==imageR2)
+                    {
+                        setImage(imageRWalk);
+                    }
+                    else
+                    {
+                        setImage(imageR1);
+                    }
                 }
             }
-        }
-        if(direction.equals("left"))
-        {
-            if(walkDelCount>walkDelay)
+            if(direction.equals("left"))
             {
-                walkDelCount = 0;
-                if(getImage()==imageL1 || getImage()==imageL2)
+                if(walkDelCount>walkDelay)
                 {
-                    setImage(imageLWalk);
-                }
-                else
-                {
-                    setImage(imageL1);
+                    walkDelCount = 0;
+                    if(getImage()==imageL1 || getImage()==imageL2)
+                    {
+                        setImage(imageLWalk);
+                    }
+                    else
+                    {
+                        setImage(imageL1);
+                    }
                 }
             }
         }
     }
 
-    public boolean jimOK() 
+    public boolean playerOK() 
     //this would've been the method to use in some classes' act()s if the game ended upon Jim's defeat
     {
         Daumscape daum = (Daumscape) getWorld();
-        if(daum.jim.health>0) //prevents an IllegalStateException when Jim is defeated
+        if(daum.player.health>0) //prevents an IllegalStateException when Jim is defeated
         {
             return true;
         }

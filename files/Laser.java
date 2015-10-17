@@ -10,7 +10,7 @@ public class Laser extends Actor
 {
     private String direction;
     private int speed = 6; //sets the distance covered per act-method
-    private int damage = 20; //sets the amount of damage to be dealt on mobs/Jim (depending on who fired it)
+    private int damage = 20; //sets the amount of damage to be dealt on mobs/Player (depending on who fired it)
     private int life = 50; //sets the duration of the laser's lifespan
     private String className; //holds the name of the object that fired the laser
 
@@ -67,7 +67,7 @@ public class Laser extends Actor
 
     private void checkHit()
     {
-        if(className.equals("Jim"))
+        if(className.equals("Player"))
         {
             Mob mob = (Mob) getOneIntersectingObject(Mob.class);
             if(mob!=null)
@@ -78,10 +78,10 @@ public class Laser extends Actor
         }
         if(className.equals("mob"))
         {
-            Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-            if(jim!=null)
+            Player player = (Player) getOneIntersectingObject(Player.class);
+            if(player!=null)
             {
-                jim.hit(damage, getX(), getY());
+                player.hit(damage, getX(), getY());
                 getWorld().removeObject(this);
             }
         }

@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Upon ingestion, will cause Jim to recover some HP.
+ * Upon ingestion, will cause Player to recover some HP.
  * 
  * Alina Vuong
  * 5.9.13
@@ -16,10 +16,10 @@ public class Flan extends Actor
 
     private void checkIfEaten()
     {
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-        if(jim!=null)
+        Player player = (Player) getOneIntersectingObject(Player.class);
+        if(player!=null)
         {
-            jim.add(hpValue);
+            player.add(hpValue);
             getWorld().removeObject(this);
         }
     }

@@ -6,9 +6,8 @@ import java.util.List;
  * Alina Vuong
  * 2.23.13
  */
-abstract class Mob extends Penguin
-{  
-    public int touchDmg; //to be defined in subclass; determines damage inflicted on Jim by touch
+abstract class Mob extends Mover {  
+    public int touchDmg; //to be defined in subclass; determines damage inflicted on player by touch
     public int aggroDelay = 30;
     public int aggroDelCount = 0;
 
@@ -37,8 +36,8 @@ abstract class Mob extends Penguin
             checkHealth(); //always leave this last
         }
 
-        //If Jim were to be removed from the world upon defeat, as it was at first,
-        //this class would've had to continually check a boolean called jimOK because aggro() uses Jim's fields
+        //If player were to be removed from the world upon defeat, as it was at first,
+        //this class would've had to continually check a boolean called playerOK because aggro() uses player's fields
         //and would throw an IllegalStateException
     }    
 
@@ -50,23 +49,23 @@ abstract class Mob extends Penguin
 
             Daumscape daum = (Daumscape) getWorld();
 
-            if(daum.jim.getX()>getX())
+            if(daum.player.getX()>getX())
             {
                 setLocation(getX()+speed, getY());
                 setDirection("right");
                 super.walk();
             }
-            if(daum.jim.getX()<getX())
+            if(daum.player.getX()<getX())
             {
                 setLocation(getX()-speed, getY());
                 setDirection("left");
                 super.walk();
             }
-            if(daum.jim.getY()>getY())
+            if(daum.player.getY()>getY())
             {
                 setLocation(getX(), getY()+speed);
             }
-            if(daum.jim.getY()<getY())
+            if(daum.player.getY()<getY())
             {
                 setLocation(getX(), getY()-speed);
             }
@@ -88,10 +87,10 @@ abstract class Mob extends Penguin
 
     public void checkHit()
     {
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-        if(jim!=null)
+        Player player = (Player) getOneIntersectingObject(Player.class);
+        if(player!=null)
         {
-            jim.hit(touchDmg, getX(), getY());
+            player.hit(touchDmg, getX(), getY());
         }
     }
 

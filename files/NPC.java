@@ -6,9 +6,9 @@ import java.util.ArrayList;
  * Alina Vuong
  * 2.24.13
  */
-public class NPC extends Penguin implements Speaker
+public class NPC extends Mover implements Speaker
 {
-    private boolean talkedTo = false; //tracks whether Jim has already talked to the NPC; prevents memory overflow
+    private boolean talkedTo = false; //tracks whether Player has already talked to the NPC; prevents memory overflow
     private String name;
     public NPC() //generic NPCs for mapNum1
     {
@@ -58,9 +58,8 @@ public class NPC extends Penguin implements Speaker
     public void checkTalk()
     {
         Daumscape daum = (Daumscape) getWorld();
-        Jim jim = (Jim) getOneIntersectingObject(Jim.class);
-        if(jim!=null && talkedTo==false && daum.internCount+daum.bossCount==0)
-        {
+        Player player = (Player) getOneIntersectingObject(Player.class);
+        if(player!=null && talkedTo==false) {
             talkedTo = true;
             talk();
         }
@@ -69,8 +68,6 @@ public class NPC extends Penguin implements Speaker
     public void talk()
     {
         Daumscape daum = (Daumscape) getWorld();
-        daum.npcCount--;
-        DialogueBox box = new DialogueBox(name, 0);
-        daum.addObject(box, daum.getWidth()/2, daum.getHeight()-box.height+50);
+        daum.talk(name);
     }
 }

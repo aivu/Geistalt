@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Tracks Jim's remaining HP.
+ * Tracks Player's remaining HP.
  * The Counter class from newAsteroids was a significant reference.
  * 
  * Alina Vuong
@@ -33,7 +33,7 @@ public class HPCounter extends Actor
     public void act() 
     {
         Daumscape daum = (Daumscape) getWorld();
-        newHP = daum.jim.health;
+        newHP = daum.player.health;
         if(hp < newHP)
         {
             hp++;

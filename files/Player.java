@@ -14,17 +14,16 @@ public class Player extends Mover
     public int realizeDelCount = 0; //same as above
     private int realizeDelay = 30;
     private DialogueBox box;
-    public Player(DialogueBox b)
-    {
+    public Player(DialogueBox b) {
         super();
         box = b;
         imageR1 = new GreenfootImage("Ghost Sprite Right 1.png");
-        imageR2 = new GreenfootImage("Ghost Sprite Right 2.png");
-        imageRWalk = imageR2; //new GreenfootImage("Ghost Sprite Front 1.png");
+        imageR2 = new GreenfootImage("Ghost Sprite Right 3.png");
+        imageRWalk = new GreenfootImage("Ghost Sprite Right 2.png");
 
         imageL1 = new GreenfootImage("Ghost Sprite Left 1.png");
-        imageL2 = new GreenfootImage("Ghost Sprite Left 2.png");
-        imageLWalk = imageL2; //new GreenfootImage("Ghost Sprite Front 2.png");
+        imageL2 = new GreenfootImage("Ghost Sprite Left 3.png");
+        imageLWalk = new GreenfootImage("Ghost Sprite Left 2.png");
 
         setImage(imageR1);
 
@@ -61,32 +60,26 @@ public class Player extends Mover
     private void checkKeys()
     {
         if(!box.visible()) {
-            if(Greenfoot.isKeyDown("right")) {
-                setDirection("right");
-                setLocation(getX()+speed, getY());
-                super.walk();
-            } else if(Greenfoot.isKeyDown("left"))
-            {
-                setDirection("left");
-                setLocation(getX()-speed, getY());
-                super.walk();
-            }
-            if(Greenfoot.isKeyDown("up")) {
-                setLocation(getX(), getY()-speed);
-                if(walkDelCount>walkDelay) {
-                    walkDelCount = 0;
-                    if(getImage()==imageR1 || getImage()==imageR2) {
-                        setImage(imageRWalk);
-                    } else if(getImage()==imageRWalk) {
-                        setImage(imageR1);
-                    } else if(getImage()==imageL1 || getImage()==imageL2) {
-                        setImage(imageLWalk);
-                    } else if(getImage()==imageLWalk) {
-                        setImage(imageL1);
-                    }
+            boolean right = Greenfoot.isKeyDown("right");
+            boolean left = Greenfoot.isKeyDown("left");
+            boolean up = Greenfoot.isKeyDown("up");
+            boolean down = Greenfoot.isKeyDown("down");
+
+            if (right || left || up || down) {
+                if (right) {
+                    setDirection("right");
+                    setLocation(getX()+speed, getY());
+                    super.walk();
+                } else if (left) {
+                    setDirection("left");
+                    setLocation(getX()-speed, getY());
+                    super.walk();
                 }
-            } else if(Greenfoot.isKeyDown("down")) {
-                setLocation(getX(), getY()+speed);
+                if (up) {
+                    setLocation(getX(), getY()-speed);
+                } else if (down) {
+                    setLocation(getX(), getY()+speed);
+                }
                 if(walkDelCount > walkDelay) {
                     walkDelCount = 0;
                     if(getImage()==imageR1 || getImage()==imageR2) {

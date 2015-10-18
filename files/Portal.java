@@ -39,7 +39,7 @@ public class Portal extends Actor
     {
         Daumscape daum = (Daumscape) getWorld();
         List<DialogueBox> mobs = daum.getObjects(Mob.class);
-        if(daum.noChat() && mobs.size() == 0) {
+        if(daum.dialogueDone() && mobs.size() == 0) {
             this.setImage(open);
         }
     }

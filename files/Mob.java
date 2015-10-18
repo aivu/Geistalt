@@ -26,6 +26,7 @@ abstract class Mob extends Mover {
     public void act() 
     {
         super.act();
+        super.animate();
         aggroDelCount++;
 
         List<DialogueBox> boxes = getWorld().getObjects(DialogueBox.class);

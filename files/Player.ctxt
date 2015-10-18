@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=b
+comment0.target=Player(DialogueBox)
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ animate()
+comment3.params=
+comment3.target=void\ checkKeys()
+comment4.params=
+comment4.target=void\ hpLimit()
+comment5.params=
+comment5.target=void\ checkHealth()
+comment6.params=
+comment6.target=void\ savePoint()
+numComments=7

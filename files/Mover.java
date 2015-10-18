@@ -28,10 +28,12 @@ public class Mover extends Actor
     public int dmgDelCount = 0;
     public int hpDelCount = 0;
     public int kbDelCount = 0;
+    
+    public Mover() {
+        setImage(imageR1);
+    }
 
-    public void act() 
-    {
-        animate();
+    public void act() {
         bounceDelCount++;
         walkDelCount++;        
 
@@ -144,7 +146,7 @@ public class Mover extends Actor
     }  
     
     
-    private boolean okToMove()
+    protected boolean okToMove()
     {
         Wall wall = (Wall) getOneIntersectingObject(Wall.class);
         Daumscape daum = (Daumscape) getWorld();

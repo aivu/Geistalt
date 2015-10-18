@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=
 comment0.target=NPC()
-comment1.params=name
-comment1.target=NPC(java.lang.String)
+comment1.params=name\ imageR\ imageL\ direction
+comment1.target=NPC(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=

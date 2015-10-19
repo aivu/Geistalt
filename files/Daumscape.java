@@ -27,7 +27,7 @@ public class Daumscape extends World
     private int lastBoxDelay = 250;
     private boolean boxAdded, lastAdded, creditsAdded; //keeps certain boxes from being added funny at different parts of the game
 
-    public GreenfootSound bgm = new GreenfootSound("LiquidMountains.mp3");
+    public GreenfootSound bgm = new GreenfootSound("Clair De Lune.mp3");
     public boolean bgmOn = true;
     public boolean soundOn = true;
     private boolean dialogueDone = false;
@@ -35,7 +35,7 @@ public class Daumscape extends World
     {    
         super(750, 550, 1); 
 
-        setPaintOrder(Intro.class, DialogueBox.class, HPCounter.class, Player.class, Laser.class, Flan.class, Portal.class, Toggle.class, Wall.class);
+        setPaintOrder(Intro.class, DialogueBox.class, HPCounter.class, Player.class, NPC.class, Laser.class, Flan.class, Portal.class, Toggle.class, Wall.class);
 
         //addObject(new Intro(), getWidth()/2, getHeight()/2);
         addPlayer();
@@ -47,40 +47,38 @@ public class Daumscape extends World
         updateMap();
         //bgm.play();
         addObject(box, getWidth()/2, getHeight()-box.height+50);
+        addDialogue();
         box.chat("intro");
 
-        addDialogue();
     }
 
-    public void act()
-    {        
-        if(mapNum!=LAST) {
-            if(bgmOn) {
-                if(!bgm.isPlaying()) {
+    public void act() {        
+        if (mapNum != LAST) {
+            if (bgmOn) {
+                if (!bgm.isPlaying()) {
                     bgm.play();
                 }
-            } else if(!bgmOn) {
-                if(bgm.isPlaying()) {
+            } else if (!bgmOn) {
+                if (bgm.isPlaying()) {
                     bgm.stop();
                 }
             }
         }
-        if(mapNum==LAST) {
-            if(!lastAdded) {
+        if (mapNum==LAST) {
+            if (!lastAdded) {
                 lastBoxDelCount++;    
-                if(lastBoxDelCount>lastBoxDelay)
+                if (lastBoxDelCount>lastBoxDelay)
                 {
                     lastBoxDelCount = 0;
                     lastAdded = true;
                 }
             }
-            if(lastAdded && !creditsAdded)
-            {
-                if(box.visible()) //Prevents the credits from covering Sox's last line after only a small amount of time.
+            if (lastAdded && !creditsAdded) {
+                if (box.visible()) //Prevents the credits from covering Sox's last line after only a small amount of time.
                 {       
                     lastBoxDelCount++;
                 }
-                if(lastBoxDelCount>lastBoxDelay)
+                if (lastBoxDelCount>lastBoxDelay)
                 {
                     //no need to reset delay now
                     creditsAdded = true;
@@ -127,34 +125,29 @@ public class Daumscape extends World
         }
     }
 
-    private void addWalls() //will be called after every map change
-    { //create one wall and then have that wall create all the others
+    private void addWalls() {
         Wall one = new Wall();
         addObject(one, 0, 0);
         one.addBase();
         one.addOthers();
     }
 
-    private void removeNPCs() //will be called after every map change. Removes all objects from the NPC class from the world
-    {
+    private void removeNPCs() {
         List<NPC> npcs = getObjects(NPC.class);
         removeObjects(npcs);
     }
 
-    private void removeFlan()
-    {
+    private void removeFlan() {
         List<Flan> flans = getObjects(Flan.class);
         removeObjects(flans);
     }
 
-    private void removeWalls()
-    {
+    private void removeWalls() {
         List<Wall> walls = getObjects(Wall.class);
         removeObjects(walls);
     }
 
-    public void checkClear() //to be used for changeNext() in this class and will also be invoked in class Sox
-    {
+    public void checkClear() {
         List<Mob> mobs = getObjects(Mob.class);
         if (mobs.size() == 0) {
             mapIsClear = true;
@@ -167,11 +160,9 @@ public class Daumscape extends World
         return mapIsClear;
     }
 
-    public void changeNext() //to be invoked by the Portal class
-    {
+    public void changeNext() {
         checkClear();
-        if(mapIsClear && mapNum<TOTALMAPS)
-        {            
+        if (mapIsClear && mapNum < TOTALMAPS) {            
             mapNum++;
             updateMap();
         }
@@ -181,51 +172,60 @@ public class Daumscape extends World
         removeNPCs();
         addNPCs();
         player.setLocation(player.getImage().getWidth(), getHeight()/2);
-        if(mapNum==LAST) {
+        dialogueDone = false;
+        if (mapNum==LAST) {
             setBackground(space);
-            bgm.stop();
+            //bgm.stop();
             removeObject(player);
             removeWalls();
             removeObject(port);
             removeObject(counter);
             mapIsClear = false;
-            //Greenfoot.playSound("Always With Me.mp3");
-            Spaceship ship = new Spaceship();
+            Prop ship = new Prop("spaceship1.png", "spaceship2.png");
             addObject(ship, getWidth()/2, getHeight()/2);
+            box.chat("last");
         }
     }
-   
+
     private void addNPCs() {
         if (mapNum == 0) {
             NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "left");
-            addObject(millie, getWidth()-200, getHeight()/2);        
+            addObject(millie, getWidth()/2 + 25, getHeight()/2);        
             NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "right");
-            addObject(pythia, getWidth()-250, getHeight()/2);
+            addObject(pythia, getWidth()/2 - 20, getHeight()/2);
             dialogueDone = false;
         } else if (mapNum == 1) {
-            NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "left");
-            addObject(millie, getWidth()-230, getHeight()/2 - 10);        
-            NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "right");
-            addObject(pythia, getWidth()-280, getHeight()/2 - 30);
-            NPC isaac = new NPC("Isaac", "Izzy Cropped.png", "Izzy Cropped Left.png", "left");
-            addObject(isaac, getWidth()-250, getHeight()/2 - 50);
+            NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "right");
+            addObject(millie, getWidth()/2 - 60, getHeight()/2 + 10);
+            NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "left");
+            addObject(pythia, getWidth()/2, getHeight()/2);
+            NPC isaac = new NPC("Isaac", "Izzy Cropped.png", "Izzy Cropped Left.png", "right");
+            addObject(isaac, getWidth()/2 - 40, getHeight()/2 - 30);
 
             dialogueDone = false;
         } else if (mapNum == 2) {
             NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "right");
-            addObject(millie, getWidth()-400, getHeight()/2 - 10);        
-            NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "left");
-            addObject(pythia, getWidth()-200, getHeight()/2 - 30);
+            addObject(millie, getWidth()/2 - 100, getHeight()/2 - 50);        
             NPC isaac = new NPC("Isaac", "Izzy Cropped.png", "Izzy Cropped Left.png", "left");
-            addObject(isaac, getWidth()-350, getHeight()/2 - 50);
-            Wall one = new Wall();
-            addObject(one, getWidth()-330, getHeight()/2 - 50);
-            NPC simon = new NPC("Simon", "Simon Cropped.png", "Simon Cropped Left.png", "right");
-            addObject(simon, getWidth()-250, getHeight()/2 - 50);
+            addObject(isaac, getWidth()/2 - 70, getHeight()/2 - 30);
+            NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "right");
+            addObject(pythia, getWidth()/2 + 50, getHeight()/2 - 10);
+            NPC simon = new NPC("Simon", "Simon Cropped.png", "Simon Cropped Left.png", "left");
+            addObject(simon, getWidth()/2 + 90, getHeight()/2 - 20);
+            NPC dancer = new NPC("Dancer", "Dancer Cropped.png", "Dancer Cropped Left.png", "left");
+            addObject(dancer, getWidth()/2 + 180, getHeight()/2 - 150);
+            dialogueDone = false;
+        } else if (mapNum == 3) {
+            NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "right");
+            addObject(millie, getWidth()/2 - 70, getHeight()/2 + 5);
+            NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "left");
+            addObject(pythia, getWidth()/2, getHeight()/2);
+            NPC isaac = new NPC("Isaac", "Izzy Cropped.png", "Izzy Cropped Left.png", "right");
+            addObject(isaac, getWidth()/2 - 40, getHeight()/2 - 25);
 
             dialogueDone = false;
-
         }
+        
     }
 
     public void talk (String name) {
@@ -235,7 +235,8 @@ public class Daumscape extends World
                 box.chat("who's home?");
                 dialogueDone = true;
             }
-        } else if (mapNum == 1) {if (name.equals("Millie") || name.equals("Pythia")) {
+        } else if (mapNum == 1) {
+            if (name.equals("Millie") || name.equals("Pythia") || name.equals("Isaac")) {
                 box.chat("drinks");
                 dialogueDone = true;
             }
@@ -243,11 +244,26 @@ public class Daumscape extends World
                 box.chat("the disco");
                 dialogueDone = true;
             }
+        }   else if (mapNum == 3) {
+            if (name.equals("Millie") || name.equals("Pythia") || name.equals("Isaac")) {
+                box.chat("cya");
+                dialogueDone = true;
+            }
         }
     }
-    
+
     private void addDialogue() {
-        
+        ArrayDeque<String> intro = new ArrayDeque();
+        intro.add("Geistalt!");
+        intro.add("Use the arrow keys to move.");
+        intro.add("Walk to characters to see what they're saying.");
+        intro.add("");
+        intro.add("?");
+        intro.add("What's your best friend Pythia doing over");
+        intro.add("there?");
+        intro.add("");
+        box.add("intro", intro);
+
         ArrayDeque<String> seq1 = new ArrayDeque();
         seq1.add("Millie");
         seq1.add("Pythia? Hey Pythia!");
@@ -318,8 +334,8 @@ public class Daumscape extends World
         seq2.add("");
         seq2.add("Millie");
         seq2.add("Would be a bit neater without Damon's");
-        seq2.add("messiness huh? ");
-        seq2.add("Haha.");
+        seq2.add("messiness huh? Haha.");
+        seq2.add("");
         seq2.add("Pythia");
         seq2.add("");
         seq2.add("...");
@@ -329,7 +345,7 @@ public class Daumscape extends World
         seq2.add("Maybe some more drinks?");
         seq2.add("");
         seq2.add("Damon");
-        seq2.add("Godammit Millie.");
+        seq2.add("What the heck, Millie.");
         seq2.add("...");
         seq2.add("Anyways. What should Isaac drink?");
         box.add("drinks", seq2);
@@ -359,7 +375,7 @@ public class Daumscape extends World
         seq3.add("I love disco, honestly.");
         seq3.add("");
         seq3.add("Isaac");
-        seq3.add("And I love you!!!");
+        seq3.add("And I love you!");
         seq3.add("");
         seq3.add("");
         seq3.add("Pythia");
@@ -379,14 +395,14 @@ public class Daumscape extends World
         ArrayDeque<String> chooseDance = new ArrayDeque();
         chooseDance.add("Damon. What does she want to do?");
         chooseDance.add("(A) Go up to him to dance.");
-        chooseDance.add("(B) Stay at the counter.");
+        chooseDance.add("(B) Stay next to your friend Simon.");
         chooseDance.add("(C) Give him some dance tips.");
         chooseDance.add("Go up to him and dance.");
         chooseDance.add("You go up to him and you both dance.");
         chooseDance.add("But, even though you're both smiling,");
         chooseDance.add("you feel a bit quiet inside.");
         chooseDance.add("Stay at the counter.");
-        chooseDance.add("You sit quietly in response to Simon's");
+        chooseDance.add("You stand quietly in response to Simon's");
         chooseDance.add("suggestion. Some chaotic thoughts almost come back");
         chooseDance.add("to you. But you let the music drown them out.");
         chooseDance.add("Give him some dance tips.");
@@ -402,24 +418,81 @@ public class Daumscape extends World
         ArrayDeque<String> seq4 = new ArrayDeque();
         seq4.add("Isaac");
         seq4.add("You know with all that's said and done, life");
-        seq4.add("isn't really too bad.");
-        seq4.add("Right?");
+        seq4.add("isn't really too bad. Right?");
+        seq4.add("");
 
         seq4.add("Pythia");
-        seq4.add("");
-        seq4.add("");
-        seq4.add("");
-
-        seq4.add("");
-        seq4.add("");
+        seq4.add("Sure. But, you know.");
         seq4.add("");
         seq4.add("");
 
-        seq4.add("");
-        seq4.add("");
-        seq4.add("");
+        seq4.add("Pythia");
+        seq4.add("I'm not going to be happy right away. I");
+        seq4.add("won't. And I don't feel anything right now.");
         seq4.add("");
 
+        seq4.add("Millie");
+        seq4.add("...");
+        seq4.add("");
+        seq4.add("Do you have someone you can ask for help?");
+
+        seq4.add("Pythia");
+        seq4.add("My problems aren't going to disappear overnight.");
+        seq4.add("I need time to mourn. Not someone to 'fix' me.");
+        seq4.add("I miss my best friend.");
+
+        seq4.add("Damon");
+        seq4.add("Good, sweet, beautiful Pythia!!");
+        seq4.add("Jesus! If only I hadn't left this world so soon.");
+        seq4.add("");
+        
+        seq4.add("Pythia");
+        seq4.add("Alright. I'll see you later.");
+        seq4.add("");
+        seq4.add("");
+        box.add("cya", seq4);
+
+        ArrayDeque<String> last = new ArrayDeque();
+        last.add("Tomorrow");
+        last.add("Here's what happened next.");
+        last.add("Pythia, my dear sweet best friend, went home.");
+        last.add("She was down a lot of times. Friends helped out.");
+
+        last.add("Tomorrow");
+        last.add("That was what was needed. No pity, no shame.");
+        last.add("Sympathy, only slightly important compared to");
+        last.add("action.");
+        
+        last.add("Tomorrow");
+        last.add("Friends listened, and made sure she had the basic");
+        last.add("necessities while she mourned. And they kept Damon");
+        last.add("in their hearts, carried him in their pockets.");
+
+        last.add("Damon");
+        last.add("Bye Pythia.");
+        last.add("Anyways. Time to check out the rest of the ");
+        last.add("world while I'm here.");
+        
+        last.add("Acknowledgments");
+        last.add("Thanks to the Queer Games Workshop 2015");
+        last.add("Organizers D Pozo, Chris Goetz, and the guest ");
+        last.add("speakers for inspiration and feedback!");
+        box.add("last", last);
+        
+        last.add("Credits");
+        last.add("Storyline, Character Design: William Watkins");
+        last.add("Music Compilation, Story Editing: Grace Gipson");
+        last.add("Programming, Story Editing: Alina Vuong");
+        
+        last.add("Credits");
+        last.add("Character Sprites, Art Assets: Leo Lin");
+        last.add("");
+        last.add("");
+        
+        last.add("Thanks for playing!");
+        last.add("");
+        last.add("");
+        last.add("See you again soon.");
     }
 }
 

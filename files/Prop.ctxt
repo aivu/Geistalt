@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Spaceship()
+comment0.params=image1\ image2
+comment0.target=Prop(java.lang.String,\ java.lang.String)
 comment1.params=
 comment1.target=void\ act()
 comment2.params=

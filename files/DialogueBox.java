@@ -30,19 +30,6 @@ public class DialogueBox extends Actor
     private HashMap<String, ArrayDeque> lines = new HashMap();
     private HashMap<String, String> options = new HashMap();
 
-    public DialogueBox() {
-        ArrayDeque<String> intro = new ArrayDeque();
-        intro.add("Introduction");
-        intro.add("Use the arrow keys to move.");
-        intro.add("Walk to characters to see what they're saying.");
-        intro.add("");
-        intro.add("");
-        intro.add("What's your best friend Pythia doing over");
-        intro.add("there?");
-        intro.add("");
-        lines.put("intro", intro);
-    }
-
     public void act() {
         boxDelCount++;
         checkPress();

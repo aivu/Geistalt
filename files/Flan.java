@@ -9,16 +9,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Flan extends Actor
 {
     private int hpValue= 20;
-    public void act() 
-    {
+    public void act() {
         checkIfEaten();
     }    
 
-    private void checkIfEaten()
-    {
+    private void checkIfEaten() {
         Player player = (Player) getOneIntersectingObject(Player.class);
-        if(player!=null)
-        {
+        if(player!=null) {
             player.add(hpValue);
             getWorld().removeObject(this);
         }

@@ -181,7 +181,7 @@ public class Daumscape extends World
             removeObject(port);
             removeObject(counter);
             mapIsClear = false;
-            Prop ship = new Prop("spaceship1.png", "spaceship2.png");
+            BackgroundObject ship = new BackgroundObject("spaceship1.png", "spaceship2.png");
             addObject(ship, getWidth()/2, getHeight()/2);
             box.chat("last");
         }
@@ -193,6 +193,9 @@ public class Daumscape extends World
             addObject(millie, getWidth()/2 + 25, getHeight()/2);        
             NPC pythia = new NPC("Pythia", "Bestie Cropped.png", "Bestie Cropped Left.png", "right");
             addObject(pythia, getWidth()/2 - 20, getHeight()/2);
+            NPC dog = new NPC("Dog", "Dog Cropped.png", "Dog Cropped Left.png", "left");
+            addObject(dog, 200, 200);
+           
             dialogueDone = false;
         } else if (mapNum == 1) {
             NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "right");
@@ -214,6 +217,7 @@ public class Daumscape extends World
             addObject(simon, getWidth()/2 + 90, getHeight()/2 - 20);
             NPC dancer = new NPC("Dancer", "Dancer Cropped.png", "Dancer Cropped Left.png", "left");
             addObject(dancer, getWidth()/2 + 180, getHeight()/2 - 150);
+            
             dialogueDone = false;
         } else if (mapNum == 3) {
             NPC millie = new NPC("Millie", "Millie Cropped.png", "Millie Cropped Left.png", "right");
@@ -231,6 +235,9 @@ public class Daumscape extends World
     public void talk (String name) {
         if (dialogueDone) { return; }
         if (mapNum == 0) {
+            if (name.equals("Dog")) {
+                box.chat("dog");
+            }
             if (name.equals("Millie") || name.equals("Pythia")) {
                 box.chat("who's home?");
                 dialogueDone = true;
@@ -263,6 +270,18 @@ public class Daumscape extends World
         intro.add("there?");
         intro.add("");
         box.add("intro", intro);
+        
+        ArrayDeque<String> dog = new ArrayDeque();
+        dog.add("Dog");
+        dog.add("Ruf!");
+        dog.add("");
+        dog.add("");
+        
+        dog.add("");
+        dog.add("The dog whines for its owner.");
+        dog.add("");
+        dog.add("");
+        box.add("dog", dog);
 
         ArrayDeque<String> seq1 = new ArrayDeque();
         seq1.add("Millie");

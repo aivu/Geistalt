@@ -1,18 +1,17 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Prop.
+ * Background object.
  * 
  * Alina Vuong
  * 2.25.13
  */
-public class Prop extends Actor
-{
+public class BackgroundObject extends Actor {
     private int animDelCount = 0;
     private int animateDelay = 30;
     
     private GreenfootImage img1, img2;
-    public Prop(String image1, String image2) {
+    public BackgroundObject(String image1, String image2) {
         img1 = new GreenfootImage(image1);
         img2 = new GreenfootImage(image2);
         setImage(img2);
